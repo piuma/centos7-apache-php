@@ -7,7 +7,7 @@ MAINTAINER Piuma <piuma@piumalab.org>
 #
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
-    && rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+    && rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
 
 
 RUN yum -y install \
@@ -24,6 +24,7 @@ RUN yum -y install \
     php-pear-MDB2-Driver-mysqli \
     php-pecl-memcached \
     php-xml \
+    msmtp \
     && yum -y update bash \
     && rm -rf /var/cache/yum/* \
     && yum clean all
@@ -92,14 +93,19 @@ RUN sed -i \
 RUN sed -i \
     -e 's~^;date.timezone =$~date.timezone = Europe/Rome~g' \
     -e 's~^;user_ini.filename =$~user_ini.filename =~g' \
+    -e 's~^sendmail_path = /usr/sbin/sendmail -t -i$~sendmail_path = /usr/bin/msmtp -C /etc/msmtprc -t -i~g' \
     /etc/php.ini
 
 RUN echo '<?php phpinfo(); ?>' > /var/www/html/index.php
 
 #
+# Add msmtp example configuration
+#
+RUN curl http://msmtp.sourceforge.net/doc/msmtprc.txt -o /etc/msmtprc
+
+#
 # Copy files into place
 #
-
 #ADD 
 
 #
