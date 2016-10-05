@@ -24,6 +24,7 @@ RUN yum -y install \
     php-pear-MDB2-Driver-mysqli \
     php-pecl-memcached \
     php-xml \
+    php-gd \
     msmtp \
     && yum -y update bash \
     && rm -rf /var/cache/yum/* \
