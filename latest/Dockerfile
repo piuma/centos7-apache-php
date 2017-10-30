@@ -7,7 +7,7 @@ MAINTAINER Piuma <piuma@piumalab.org>
 #
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
-    && yum -y install epel-release-7-8.noarch
+    && yum -y install epel-release.noarch
 
 
 RUN yum -y install \
