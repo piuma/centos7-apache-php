@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.2.1511
 
 MAINTAINER Piuma <piuma@piumalab.org>
 
