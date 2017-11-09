@@ -48,8 +48,7 @@ account default : myaccount
 
 ## Docker Compose
 
-An example to use the container in docker-compose in combination
-with MySql database
+An example to use the container in docker-compose in combination with MySql database
 ```
 version: "2"
 services:
