@@ -17,6 +17,7 @@ RUN yum -y install \
     mod_ssl \
     php \
     php-cli \
+    php-imap \
     php-ldap \
     php-mbstring \
     php-mcrypt \
