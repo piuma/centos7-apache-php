@@ -11,7 +11,7 @@ RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import https://rpms.remirepo.net/RPM-GPG-KEY-remi \
     && rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-RUN yum -y install \
+RUN yum -y --enablerepo=remi-php55 install \
     httpd \
     mysql-devel \
     mysql-libs \
