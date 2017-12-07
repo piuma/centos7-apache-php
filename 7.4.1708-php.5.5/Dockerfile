@@ -5,13 +5,15 @@ MAINTAINER Piuma <piuma@piumalab.org>
 #
 # Import the Centos-6 RPM GPG key to prevent warnings and Add EPEL Repository
 #
-RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
+RUN sed -i 's/override_install_langs=/#override_install_langs=/' /etc/yum.conf \
+    && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
-    && yum -y install epel-release.noarch \
+    && yum -y -q install epel-release.noarch yum-plugin-ovl \
     && rpm --import https://rpms.remirepo.net/RPM-GPG-KEY-remi \
     && rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-RUN yum -y --enablerepo=remi-php55 install \
+RUN yum -y -q update bash glibc-common \
+    && yum -y -q --enablerepo=remi-php55 install \
     httpd \
     mysql-devel \
     mysql-libs \
@@ -29,7 +31,6 @@ RUN yum -y --enablerepo=remi-php55 install \
     php-xml \
     php-gd \
     msmtp \
-    && yum -y update bash \
     && rm -rf /var/cache/yum/* \
     && yum clean all
 
@@ -100,12 +101,11 @@ RUN sed -i \
     -e 's~^sendmail_path = /usr/sbin/sendmail -t -i$~sendmail_path = /usr/bin/msmtp -C /etc/msmtprc -t -i~g' \
     /etc/php.ini
 
-RUN echo '<?php phpinfo(); ?>' > /var/www/html/index.php
-
 #
-# Add msmtp example configuration
+# Add msmtp example configuration and index.php
 #
-RUN curl http://msmtp.sourceforge.net/doc/msmtprc.txt -o /etc/msmtprc
+RUN echo '<?php phpinfo(); ?>' > /var/www/html/index.php \
+    && curl http://msmtp.sourceforge.net/doc/msmtprc.txt -o /etc/msmtprc
 
 #
 # Copy files into place
