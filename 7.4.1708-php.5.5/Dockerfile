@@ -1,4 +1,4 @@
-FROM centos:7.2.1511
+FROM centos:7.4.1708
 
 MAINTAINER Piuma <piuma@piumalab.org>
 
@@ -8,7 +8,7 @@ MAINTAINER Piuma <piuma@piumalab.org>
 RUN sed -i 's/override_install_langs=/#override_install_langs=/' /etc/yum.conf \
     && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
-    && yum -y -q install epel-release.noarch yum-plugin-ovl \
+    && yum -y -q install epel-release.noarch \
     && rpm --import https://rpms.remirepo.net/RPM-GPG-KEY-remi \
     && rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
